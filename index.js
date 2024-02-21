@@ -2,9 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-const app = express();
-app.use(bodyParser.json());
-
 mongoose.connect(
     "mongodb://admin:ATRisc16116@node58398-env-4744631.proen.app.ruk-com.cloud:11846",
     {
@@ -28,9 +25,12 @@ const Book = mongoose.model("Book", {
         unique: true,
         required: true,
     },
-        title: String,
-        allowNull: false
+    title: String,
+    author: String,
     });
+    
+const app = express();
+app.use(bodyParser.json());
 
 
 app.post('/books',  async (req, res) => {
