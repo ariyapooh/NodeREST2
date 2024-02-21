@@ -4,11 +4,14 @@ const app = express();
 
 app.use(express.json());
 
-const sequelize = new Sequelize('database', 'username', 'password', {
-    host: 'localhost',
-    dialect: 'sqlite',
-    storage: './Database/SQBooks.sqlite'
-});
+const dbUrl = 'postgres://webadmin:GLMebl11497@node58397-env-4744631.proen.app.ruk-com.cloud:11830/Books'
+
+const sequelize = new Sequelize(dbUrl);
+// const sequelize = new Sequelize('database', 'username', 'password', {
+//     host: 'localhost',
+//     dialect: 'sqlite',
+//     storage: './Database/SQBooks.sqlite'
+// });
 
 const Book = sequelize.define('book', {
     id: {
@@ -29,7 +32,7 @@ const Book = sequelize.define('book', {
 
 sequelize.sync();
 
-app.get('/books', (req, res) => {
+app.get('/books', (res, req) => {
     Book.findAll().then(books => {
         res.json(books);
     }).catch(err => {
@@ -90,4 +93,4 @@ app.delete('/books/:id', (req, res) => {
 });
 
 const port  = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
+app.listen(port, () => console.log(`Listening on port ${port}...`));
