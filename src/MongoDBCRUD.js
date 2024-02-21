@@ -2,13 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-const app = express();
-app.use(bodyParser.json());
-
 mongoose.connect(
     "mongodb://admin:ATRisc16116@node58398-env-4744631.proen.app.ruk-com.cloud:11846",
     {
-        useNewUrlPArser: true,
+        useNewUrlParser: true,
         useUnifiedTopology: true,
     }
 );
@@ -28,15 +25,18 @@ const Book = mongoose.model("Book", {
         unique: true,
         required: true,
     },
-        title: String,
-        allowNull: false
+    title: String,
+    author: String,
     });
+    
+const app = express();
+app.use(bodyParser.json());
 
 
 app.post('/books',  async (req, res) => {
     try {
         const lastBook = await Book.findOne().sort({ id: -1});
-        const nextId = lastBOok ? lastBook.id + 1 : 1;
+        const nextId = lastBook ? lastBook.id + 1 : 1;
 
         const book = new Book({
             id: nextId,
