@@ -36,7 +36,7 @@ app.use(bodyParser.json());
 app.post('/books',  async (req, res) => {
     try {
         const lastBook = await Book.findOne().sort({ id: -1});
-        const nextId = lastBOok ? lastBook.id + 1 : 1;
+        const nextId = lastBook ? lastBook.id + 1 : 1;
 
         const book = new Book({
             id: nextId,
